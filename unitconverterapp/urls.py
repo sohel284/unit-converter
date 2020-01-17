@@ -4,4 +4,5 @@ from unitconverterapp import views
 
 urlpatterns = [
     path('', views.home, name='home'),
+    path('<slug:converter_name>', views.home, name='converter'),
 ]

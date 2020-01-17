@@ -1,11 +1,12 @@
 {% extends 'base.html' %}
 {% block 'content' %}
-<h1>Convert kg to lb</h1>
+{% if conversion %}
+<h2>Convert {{conversion.from_unit.name}} to {{conversion.to_unit.name}}</h2>
 <div class="row">
     <div class="col-sm input-group">
         <input type="text" class="form-control" placeholder="1" aria-label="Recipient's username" aria-describedby="basic-addon2">
         <div class="input-group-append">
-          <span class="input-group-text" id="basic-addon2">KG</span>
+          <span class="input-group-text" id="basic-addon2">{{conversion.from_unit.symbol_name}}</span>
         </div>
     </div>
     <div class="col-sm-auto">
@@ -14,7 +15,7 @@
     <div class="col-sm input-group">
         <input type="text" class="form-control" placeholder="1" aria-label="Recipient's username" aria-describedby="basic-addon2">
         <div class="input-group-append">
-          <span class="input-group-text" id="basic-addon2">KG</span>
+          <span class="input-group-text" id="basic-addon2">{{conversion.to_unit.symbol_name}}</span>
         </div>
     </div>
     <div class="col-sm-auto">
@@ -23,12 +24,15 @@
 </div>
 <p>&nbsp;</p>
 <div class="">
-    <h5>kg</h5>
-    <p>A breief description about kg</p>
+    <h5>{{conversion.from_unit.name}}</h5>
+    <p>{{conversion.from_unit.description}}</p>
+    <p>Read more at <a href="{{ conversion.from_unit.wiki_link }}">Wikipedia</a></p>
 </div>
 
 <div class="">
-    <h5>kg</h5>
-    <p>A breief description about kg</p>
+    <h5>{{conversion.to_unit.name}}</h5>
+    <p>{{conversion.to_unit.description}}</p>
+    <p>Read more at <a href="{{ conversion.to_unit.wiki_link }}">Wikipedia</a></p>
 </div>
+{% endif %}
 {% endblock %}

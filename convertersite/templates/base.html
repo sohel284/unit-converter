@@ -43,7 +43,7 @@
                         {% for converter in converters %}
                         <li class="list-group-item py-1">
                             <a href="{% url 'converter' converter.name %}">
-                                {{ converter.from_unit.name }} to {{ converter.to_unit.name }}
+                                {{ converter.name }}
                             </a>
                         </li>
                         {% endfor %}

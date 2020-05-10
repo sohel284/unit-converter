@@ -27,3 +27,9 @@ class Conversion(models.Model):
 
     def __str__(self):
         return self.name
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(fields=['from_unit', 'to_unit'], name='uniq_from_to_units'),
+            models.UniqueConstraint(fields=['name'], name='uniq_converter_name')
+        ]

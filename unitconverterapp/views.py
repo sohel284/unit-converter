@@ -11,7 +11,7 @@ def home(request, converter_name=None):
 
     if converter_name is not None:
         try:
-            converter = Conversion.objects.select_related('from_unit', 'to_unit').get(name=converter_name)
+            converter = Conversion.objects.select_related('from_unit', 'from_unit__category', 'to_unit').get(name=converter_name)
         except Conversion.DoesNotExist:
             pass
     if category_id is not None:
@@ -22,7 +22,7 @@ def home(request, converter_name=None):
 
 
     if converter is None:
-        converter = Conversion.objects.select_related('from_unit', 'to_unit')
+        converter = Conversion.objects.select_related('from_unit', 'from_unit__category', 'to_unit')
         if category is not None:
             converter = converter.filter(from_unit__category=category)
         converter = converter.first()

@@ -1,6 +1,7 @@
+{% load static %}
 <html>
     <head>
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+        <link rel="stylesheet" href="{% static 'bootstrap-4.4.1/css/bootstrap.min.css' %}">
         <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
         <style>
             body{
@@ -26,16 +27,17 @@
             <div class="row">
                 <div class="col-md-3 col-lg-2 mt-4">
                     <h5>Categories</h5>
-                    <ul class="list-group medium">
+                    <div class="list-group medium">
                         {% for category in categories %}
-                        <li class="list-group-item py-1 {% if category.id == conversion.from_unit.category_id %}active{% endif %}">{{ category.name }}</li>
+                        <a href="{% url 'home' %}?category={{ category.pk }}" 
+                            class="py-2 list-group-item {% if category.id == conversion.from_unit.category_id %}active disabled{% endif %}">{{ category.name }}</a>
                         {% endfor %}
-                    </ul>
+                    </div>
                 </div>
-                <div class="col-md-6 col-lg-8">
+                <div class="col-md-6 col-lg-7">
                     {% block 'content' %}{% endblock %}
                 </div>
-                <div class="col-md-3 col-lg-2 mt-4">
+                <div class="col-md-3 col-lg-3 my-4">
                     <h5>More</h5>
                     <ul class="list-group medium">
                         {% for converter in converters %}

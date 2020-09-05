@@ -3,3 +3,4 @@ venv
 *.sqlite3
 convertersite/env_settings.py
 /dist/static
+.idea

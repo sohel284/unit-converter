@@ -79,9 +79,12 @@ WSGI_APPLICATION = 'convertersite.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'db_name',
-        'USER': 'db_username',
-        'PASSWORD': 'password'
+        'NAME': 'userdb',
+        'USER': 'user',
+        'PASSWORD': '1234',
+        'HOST': 'localhost',
+        'PORT': 5432
+        
     }
 }
 
@@ -124,4 +127,6 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'convertersite/static')]
-from convertersite.env_settings import *
+#from convertersite.env_settings import *
+
+

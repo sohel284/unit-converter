@@ -42,3 +42,12 @@ def home(request, converter_name=None):
         'converters': converters,
         'conversion': converter
     })
+
+
+def mytest(request):
+    return  render(request, 'test.html') 
+def lengthview(request):
+    return render(request, 'measurements/length.html', )
+def weightview(request):
+    return render(request, 'measurements/weight.html', )    
+        

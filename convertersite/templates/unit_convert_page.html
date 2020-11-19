@@ -1,0 +1,148 @@
+{% extends 'base.html' %}
+{% block 'content' %}
+{% if conversion %}
+<h2 class="pb-1 ml-5 my-3 text-center ">Convert <span class="unit">{{conversion.from_unit.name}}</span> to <span
+        class="unit">{{conversion.to_unit.name}}</span> </h2>
+<div class="row">
+    <div class="col-4 ml-5">
+        <div class="unit-input">
+            <div class="input-group">
+                <input type="text" class="form-control unit-input" value="" id="inputData"
+                    data-rate="{{conversion.rate}}" />
+                <input type="hidden" name="" id="inputHidden" value="{{conversion.rate}}" disabled>
+                <div class="input-group-append">
+                    <span class="input-group-text" id="basic-addon2">{{conversion.from_unit.symbol_name}}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-2 ">
+        <button type="button" class="btn btn-success  w-100 swap">Swap</button>
+    </div>
+    <div class="col-4 ">
+        <div class="unit-input">
+            <div class="input-group">
+                <input type="text" class="form-control unit-input" value="" aria-describedby="basic-addon3"
+                    id="outputData" data-rate="{{ conversion.inverse_rate }}" />
+                <div class="input-group-append">
+                    <span class="input-group-text" id="basic-addon3">{{conversion.to_unit.symbol_name}}</span>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<div class="row mt-4 ml-5">
+    <div class="col-10">
+        <button id="btnCalculate" type="button" class="btn btn-primary btn-md btn-block"
+            onclick="UnitCalculate()">Calculate</button>
+    </div>
+</div>
+
+<p>&nbsp;</p>
+
+
+<div class="row ml-5 mb-5" id="resultDiv">
+    <h2 class="text-center"> Solution </h2>
+    <div class="col-12" style="border: solid 2px blue;">
+        <div class=" mt-1 mr-1 text-right">
+            <button id="btnCopy" style="border: none; background: none;">Copy</button>
+        </div>
+        <div class="ml-5" style="border: solid 2px white;">
+            <div id="copyTarget">
+
+                1<span>{{ conversion.from_unit.symbol_name }}</span> =
+                <span>{{conversion.rate}}{{conversion.to_unit.symbol_name}}</span> <br>
+                <span id="rateOutput1"></span><span>{{conversion.from_unit.symbol_name}}</span> = <span
+                    id="rateOutput2"></span> * <span>{{conversion.rate}}{{conversion.to_unit.symbol_name}}</span> <br>
+                &emsp;&emsp;&ensp; = <span id="result"></span><span>{{conversion.to_unit.symbol_name}}</span>
+            </div>
+
+
+
+        </div>
+        <div id="pasteTarget" contenteditable="true" ></div>
+
+    </div>
+</div>
+
+
+{% endif %}
+{% endblock %}
+{% block 'extra_js' %}
+<script type="text/javascript">
+    
+    
+
+    $.fn.swap = function (elem) {
+        elem = elem.jquery ? elem : $(elem);
+        return this.each(function () {
+            $(document.createTextNode('')).insertBefore(this).before(elem.before(this)).remove();
+        });
+    };
+
+    function UnitCalculate() {
+
+        num1 = document.getElementById("inputData").value;
+        rate = document.getElementById("inputHidden").value;
+        val = document.getElementById("outputData").value = num1 * rate;
+        document.getElementById("rateOutput1").innerHTML = num1;
+        document.getElementById("rateOutput2").innerHTML = num1;
+        document.getElementById("result").innerHTML = val;
+
+
+
+    }
+
+
+    document.getElementById("btnCopy").addEventListener("click", function(){
+        myFunction(document.getElementById("copyTarget"));
+    });
+
+    function myFunction(element_id) {
+        element_id.setAttribute("contentEditable", true);
+        element_id.setAttribute("onfocus", "document.execCommand('selectAll', false, null)");
+        element_id.focus();
+        document.execCommand("copy");
+        element_id.removeAttribute("contentEditable");
+
+    }
+
+    
+
+
+
+
+
+
+
+    $(document).ready(function () {
+        $('button.swap').click(function () {
+            // swap title names
+            var unitTitles = $('span.unit');
+            var tempLabel = $(unitTitles[0]).text();
+            $(unitTitles[0]).text($(unitTitles[1]).text());
+            $(unitTitles[1]).text(tempLabel);
+
+            // swap input fields
+            var unitInputDivs = $('div.unit-input');
+            var inputGroup1 = $(unitInputDivs[0]).find('div.input-group').clone();
+            var inputGroup2 = $(unitInputDivs[1]).find('div.input-group').clone();
+
+            $('div.input-group').remove();
+            $(unitInputDivs[0]).append(inputGroup2);
+            $(unitInputDivs[1]).append(inputGroup1);
+        });
+
+        $("#resultDiv").hide();
+        $("#btnCalculate").click(function () {
+            $("#resultDiv").show();
+
+
+
+        });
+
+
+    });
+</script>
+{% endblock %}

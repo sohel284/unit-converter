@@ -79,8 +79,8 @@ WSGI_APPLICATION = 'convertersite.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'userdb',
-        'USER': 'user',
+        'NAME': 'projectdb',
+        'USER': 'project',
         'PASSWORD': '1234',
         'HOST': 'localhost',
         'PORT': 5432

@@ -1,7 +1,11 @@
 from django.db import models
 
 # Create your models here.
-class Category(models.Model):
+
+class Measurement(models.Model):
+    name = models.CharField(max_length=50, )
+
+class UnitConvertType(models.Model):
     name = models.CharField(max_length=32)
 
     def __str__(self):
@@ -11,10 +15,9 @@ class Category(models.Model):
 class Unit(models.Model):
     name = models.CharField(max_length=20)
     symbol_name = models.CharField(max_length=5)
-    category = models.ForeignKey(Category, on_delete=models.CASCADE)
+    unit_convert_type = models.ForeignKey(UnitConvertType, on_delete=models.CASCADE)
     description = models.CharField(max_length=2000)
-    wiki_link = models.URLField()
-
+   
     def __str__(self):
         return "%s (%s)" % (self.name, self.symbol_name)
 

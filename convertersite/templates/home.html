@@ -1,98 +1,108 @@
-{% extends 'base.html' %}
-{% block 'content' %}
-{% if conversion %}
-<h2 class="pb-1 my-3">Convert <span class="unit">{{conversion.from_unit.name}}</span> to <span class="unit">{{conversion.to_unit.name}}</span>    </h2>
-<div class="row">
-    <div class="col-md-6">
-        <div class="unit-input">
-            <div class="input-group">
-                <input type="text" class="form-control unit-input" value="1" aria-describedby="basic-addon2" 
-                    data-rate="{{conversion.rate}}" 
-                    id="input-{{conversion.from_unit.symbol_name}}" 
-                    data-tounit="{{conversion.to_unit.symbol_name}}" 
-                    onkeyup="onKeyUp(this)" />
-                <div class="input-group-append">
-                  <span class="input-group-text" id="basic-addon2">{{conversion.from_unit.symbol_name}}</span>
-                </div>
+{% load static %}
+<html>
+
+<head>
+    <link rel="stylesheet" href="{% static 'bootstrap-4.4.1/css/bootstrap.min.css' %}">
+    <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+        }
+
+        .list-group-item.active {
+            background-color: gainsboro;
+            border-color: gainsboro;
+        }
+    </style>
+    <title>{% block 'title' %}Unit Converter{% endblock %}</title>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="{% url 'unitconvert' %}">Pyron Converter</a>
+        <ul class="navbar-nav mr-auto"></ul>
+        <form class="form-inline my-2 my-lg-0">
+            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+        </form>
+    </nav>
+    <div class="container-fluid py-5 my-5 ">
+        <div class="row">
+            <div class="col-2 mx-5 px-5">
+                <h2 class="text-left">Measurement</h2>
+                <ul class="list-group text-center">
+                   
+                    <li class="list-group-item">
+                        <a href="">Length</a>
+                    </li>
+                    <li class="list-group-item">
+                        <a href="">weight</a>
+                    </li>
+                    <li class="list-group-item">
+                        <a href="">Time</a>
+                    </li>
+                    <li class="list-group-item">
+                        <a href="">Volume</a>
+                    </li>
+                    <li class="list-group-item">
+                        <a href="">Temperature</a>
+                    </li>
+                    
+                    
+                </ul>
             </div>
-        </div>
-        <label class="text-uppercase pt-1">=</label>
-        <div class="unit-input">
-            <div class="input-group">
-                <input type="text" class="form-control unit-input" value="{{conversion.rate}}" 
-                    aria-describedby="basic-addon3" 
-                    data-rate="{{ conversion.inverse_rate }}"
-                    id="input-{{conversion.to_unit.symbol_name}}" 
-                    data-tounit="{{conversion.from_unit.symbol_name}}" 
-                    onkeyup="onKeyUp(this)" />
-                <div class="input-group-append">
-                    <span class="input-group-text" id="basic-addon3">{{conversion.to_unit.symbol_name}}</span>
-                </div>
+            <div class="col-3 mx-5 px-5">
+                <h2 class="text-center">Unit</h2>
+                <ul class="list-group text-center">
+                    <li class="list-group-item">
+                        <a href="">Kilogram</a>
+                    </li>
+                    <li class="list-group-item">
+                        <a href="">Kilomiters</a>
+                    </li>
+                    <li class="list-group-item">
+                        <a href="">Kiloliters</a>
+                    </li>
+                    <li class="list-group-item">
+                        <a href="">Kelvin</a>
+                    </li>
+                    <li class="list-group-item">
+                        <a href="">Second</a>
+                    </li>
+                    
+                </ul>
+
+                 
             </div>
-        </div>
-        <div class="row mt-3">
-            <div class="col">
-                <button type="button" class="btn btn-success w-100 swap">Swap</button>
+            <div class="col-3 mx-5 px-5">
+                <h2 class="text-center">Unit Converter</h2>
+                <ul class="list-group text-center">
+                    <li class="list-group-item">
+                        <a href="">kg to g</a>
+                    </li>
+                    <li class="list-group-item">
+                        <a href=""> kL to L </a>
+                    </li>
+                    <li class="list-group-item">
+                        <a href=""> km to m </a>
+                    </li>
+                    <li class="list-group-item">
+                        <a href=""> s to ms</a>
+                    </li>
+                    <li class="list-group-item">
+                        <a href=""> k to F </a>
+                    </li>
+                    
+                </ul>
             </div>
         </div>
     </div>
-</div>
-<p>&nbsp;</p>
-<div class="">
-    <h5>{{conversion.from_unit.name}}</h5>
-    <p>{{conversion.from_unit.description}}</p>
-    <p>Read more at <a href="{{ conversion.from_unit.wiki_link }}">Wikipedia</a></p>
-</div>
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+        integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+        crossorigin="anonymous"></script>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script> -->
+    <!-- <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script> -->
+    {% block 'extra_js' %}{% endblock %}
+</body>
 
-<div class="">
-    <h5>{{conversion.to_unit.name}}</h5>
-    <p>{{conversion.to_unit.description}}</p>
-    <p>Read more at <a href="{{ conversion.to_unit.wiki_link }}">Wikipedia</a></p>
-</div>
-{% endif %}
-{% endblock %}
-{% block 'extra_js' %}
-<script type="text/javascript">
-    $.fn.swap = function (elem) {
-        elem = elem.jquery ? elem : $(elem);
-        return this.each(function () {
-            $(document.createTextNode('')).insertBefore(this).before(elem.before(this)).remove();
-        });
-    };
-
-    function onKeyUp(el) {
-        var inputEl = $(el);      
-
-        var inputVal = parseFloat(inputEl.val());
-        var outputSelector = '#input-'+inputEl.data()['tounit'];
-
-        if(!Number.isNaN(inputVal)) {
-            var rate = parseFloat(inputEl.data()['rate']);
-            var toUnit = inputEl.data()['tounit'];
-            var result = inputVal * rate;
-            $(outputSelector).val(result);
-        } else {
-            $(outputSelector).val('');
-        }
-    }
-
-    $(document).ready(function() {
-        $('button.swap').click(function() {
-            // swap title names
-            var unitTitles = $('span.unit');
-            var tempLabel = $(unitTitles[0]).text();
-            $(unitTitles[0]).text($(unitTitles[1]).text());
-            $(unitTitles[1]).text(tempLabel);
-
-            // swap input fields
-            var unitInputDivs = $('div.unit-input');
-            var inputGroup1 = $(unitInputDivs[0]).find('div.input-group').clone();
-            var inputGroup2 = $(unitInputDivs[1]).find('div.input-group').clone();
-            
-            $('div.input-group').remove();
-            $(unitInputDivs[0]).append(inputGroup2);
-            $(unitInputDivs[1]).append(inputGroup1); 
-        });
-    });
-</script>
-{% endblock %}
+</html>

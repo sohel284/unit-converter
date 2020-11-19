@@ -2,50 +2,63 @@ from django.shortcuts import render
 from unitconverterapp.models import *
 
 
-# Create your views here.
-def home(request, converter_name=None):
-    category_id = request.GET.get('category')
+def home(request):
+    
+    
+    return render(request, 'home.html', {
+        
+        
+    })
+
+
+
+
+def unitconvert(request, converter_name=None):
+    unit_convert_type_id = request.GET.get('unit_convert_type')
     
     converter = None
-    category = None
+    unit_convert_type = None
 
     if converter_name is not None:
         try:
-            converter = Conversion.objects.select_related('from_unit', 'from_unit__category', 'to_unit').get(name=converter_name)
+            converter = Conversion.objects.select_related('from_unit', 'from_unit__unit_convert_type', 'to_unit').get(name=converter_name)
         except Conversion.DoesNotExist:
             pass
-    if category_id is not None:
+    if unit_convert_type_id is not None:
         try:
-            category = Category.objects.get(pk=category_id)
-        except Category.DoesNotExist:
+            unit_convert_type = UnitConvertType.objects.get(pk=unit_convert_type_id)
+        except UnitConvertType.DoesNotExist:
             pass
 
 
     if converter is None:
-        converter = Conversion.objects.select_related('from_unit', 'from_unit__category', 'to_unit')
-        if category is not None:
-            converter = converter.filter(from_unit__category=category)
+        converter = Conversion.objects.select_related('from_unit', 'from_unit__unit_convert_type', 'to_unit')
+        if unit_convert_type is not None:
+            converter = converter.filter(from_unit__unit_convert_type=unit_convert_type)
         converter = converter.first()
     
-    categories = Category.objects.all()
+    types = UnitConvertType.objects.all()
     
     if converter is not None:
         converter.inverse_rate = (1.0 / converter.rate);
         converters = Conversion.objects.filter(
-            from_unit__category=converter.from_unit.category
+            from_unit__unit_convert_type=converter.from_unit.unit_convert_type
         ).exclude(pk=converter.pk)
     else:
         converters = None
+    
+    
+       
+    return  render(request, 'unit_convert_page.html', { 
 
-    return render(request, 'home.html', {
-        'categories': categories, 
+        'types': types,
         'converters': converters,
-        'conversion': converter
-    })
+        'conversion': converter,
+        
 
+        })         
 
-def mytest(request):
-    return  render(request, 'test.html') 
+    
 def lengthview(request):
     return render(request, 'measurements/length.html', )
 def weightview(request):

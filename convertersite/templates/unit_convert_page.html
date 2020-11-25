@@ -1,10 +1,10 @@
 {% extends 'base.html' %}
 {% block 'content' %}
 {% if conversion %}
-<h2 class="pb-1 ml-5 my-3 text-center ">Convert <span class="unit">{{conversion.from_unit.name}}</span> to <span
+<h2 class="pb-1 mt-3 " style="color:blue;">Convert <span class="unit">{{conversion.from_unit.name}}</span> to <span
         class="unit">{{conversion.to_unit.name}}</span> </h2>
 <div class="row">
-    <div class="col-4 ml-5">
+    <div class="col-md-10 col-lg-8 my-md-2">
         <div class="unit-input">
             <div class="input-group">
                 <input type="text" class="form-control unit-input" value="" id="inputData"
@@ -16,10 +16,16 @@
             </div>
         </div>
     </div>
-    <div class="col-2 ">
+</div>
+<div class="row">
+    <div class="col-md-9 col-lg-8"></div>
+    <div class="col-md-3 col-lg-2">
         <button type="button" class="btn btn-success  w-100 swap">Swap</button>
     </div>
-    <div class="col-4 ">
+</div>
+
+<div class="row">
+    <div class="col-md-10 col-lg-8 my-md-2 ">
         <div class="unit-input">
             <div class="input-group">
                 <input type="text" class="form-control unit-input" value="" aria-describedby="basic-addon3"
@@ -29,11 +35,10 @@
                 </div>
             </div>
         </div>
-
     </div>
 </div>
-<div class="row mt-4 ml-5">
-    <div class="col-10">
+<div class="row">
+    <div class="col-md-10 col-lg-8 mt-3">
         <button id="btnCalculate" type="button" class="btn btn-primary btn-md btn-block"
             onclick="UnitCalculate()">Calculate</button>
     </div>
@@ -42,27 +47,28 @@
 <p>&nbsp;</p>
 
 
-<div class="row ml-5 mb-5" id="resultDiv">
-    <h2 class="text-center"> Solution </h2>
-    <div class="col-12" style="border: solid 2px blue;">
-        <div class=" mt-1 mr-1 text-right">
-            <button id="btnCopy" style="border: none; background: none;">Copy</button>
+<div class="row" id="resultDiv">
+    <div class="col-md-8 col-lg-8 mb-5">
+        <div class="col">
+            <h2 class="text-center"> Solution </h2>
         </div>
-        <div class="ml-5" style="border: solid 2px white;">
-            <div id="copyTarget">
-
-                1<span>{{ conversion.from_unit.symbol_name }}</span> =
-                <span>{{conversion.rate}}{{conversion.to_unit.symbol_name}}</span> <br>
-                <span id="rateOutput1"></span><span>{{conversion.from_unit.symbol_name}}</span> = <span
-                    id="rateOutput2"></span> * <span>{{conversion.rate}}{{conversion.to_unit.symbol_name}}</span> <br>
-                &emsp;&emsp;&ensp; = <span id="result"></span><span>{{conversion.to_unit.symbol_name}}</span>
+        <div class="" style="border: solid 2px blue;">
+            <div class=" mt-1 mr-1 text-right">
+                <button id="btnCopy" style="border: none; background: none;">Copy</button>
             </div>
+            <div class="mb-5" style="border: solid 2px white;">
+                <div class="ml-4 mt-3 mb-2" id="copyTarget">
 
-
-
+                    1<span>{{ conversion.from_unit.symbol_name }}</span> =
+                    <span>{{conversion.rate}}{{conversion.to_unit.symbol_name}}</span> <br>
+                    <span id="rateOutput1"></span><span>{{conversion.from_unit.symbol_name}}</span> = <span
+                        id="rateOutput2"></span> * <span>{{conversion.rate}}{{conversion.to_unit.symbol_name}}</span>
+                    <br>
+                    &emsp;&emsp;&ensp; = <span id="result"></span><span>{{conversion.to_unit.symbol_name}}</span>
+                </div>
+            </div>
         </div>
-        <div id="pasteTarget" contenteditable="true" ></div>
-
+        <div id="pasteTarget" contenteditable="true"></div>
     </div>
 </div>
 
@@ -71,8 +77,8 @@
 {% endblock %}
 {% block 'extra_js' %}
 <script type="text/javascript">
-    
-    
+
+
 
     $.fn.swap = function (elem) {
         elem = elem.jquery ? elem : $(elem);
@@ -95,7 +101,7 @@
     }
 
 
-    document.getElementById("btnCopy").addEventListener("click", function(){
+    document.getElementById("btnCopy").addEventListener("click", function () {
         myFunction(document.getElementById("copyTarget"));
     });
 
@@ -108,7 +114,7 @@
 
     }
 
-    
+
 
 
 
@@ -137,10 +143,11 @@
         $("#resultDiv").hide();
         $("#btnCalculate").click(function () {
             $("#resultDiv").show();
-
-
-
         });
+
+      
+
+
 
 
     });

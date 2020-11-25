@@ -1,0 +1,56 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'bootstrap-4.4.1/css/bootstrap.min.css' %}">
+    <title>Pyron|article</title>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="{% url 'unitconvert' %}" style="color: deepskyblue;">Unit Converter</a>
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+                <a class="nav-link" href="{% url 'home' %}" style="color: deepskyblue;">Home <span
+                        class="sr-only">(current)</span></a>
+            </li>
+        </ul>
+
+    </nav>
+    <div class="container my-3">
+        <h1 style="color: darkorchid;">{{unit_type.unit_title }}</h1>
+        <div class="row">
+            <div class="col">
+                <p>{{unit_type.unit_description}}<a href="{{ unit_type.unit_article_link}}"> Read more at wikipedia</a>
+                </p>
+            </div>
+        </div>
+    </div>
+</div> 
+
+    <h5 class="mt-3 mx-5">See also</h2>
+        <hr>
+        <div class="row">
+            <div class="col mb-5 mx-5">
+                <div class="list-group medium">
+                    {% for u in units %}
+                    <a href="{% url 'unit_view' %}?unit_type={{u.pk}}"
+                        class="py-2 {% if u.id == unit_type.unit_type_id %} d-none {% endif %}">{{u.name}}</a>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        
+
+
+
+
+
+
+</body>
+
+</html>

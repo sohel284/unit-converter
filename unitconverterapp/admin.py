@@ -8,6 +8,9 @@ class ConversionAdmin(admin.ModelAdmin):
     list_select_related = ('from_unit', 'to_unit',)
     
 admin.site.register(Measurement)
+admin.site.register(MeasurementArticle)
+admin.site.register(UnitArticle)
 admin.site.register(UnitConvertType)
 admin.site.register(Unit)
+admin.site.register(UnitType)
 admin.site.register(Conversion, ConversionAdmin)

@@ -4,11 +4,43 @@ from unitconverterapp.models import *
 
 def home(request):
     
+    measurements = Measurement.objects.all()
+    types = UnitConvertType.objects.all()
+    units = UnitType.objects.all()
+   
+   
+    return render(request, 'home.html', {'measurements':measurements, 'types':types, 'units':units})
+
+
+def measurement_view(request):
+    measurement_id = request.GET.get('measurement')
+    measurement = None
     
-    return render(request, 'home.html', {
-        
-        
-    })
+    if measurement_id is not None:
+        try:
+            measurement = Measurement.objects.get(pk=measurement_id)
+        except Measurement.DoesNotExist:
+            pass
+
+    measurement = MeasurementArticle.objects.filter(measurement=measurement).get(measurement_id=measurement_id)
+    measurements = Measurement.objects.all()
+    
+    return render(request, 'measurements_article.html', {'measurement':measurement, 'measurements':measurements, })   
+
+
+def unit_view(request):
+    unit_type_id = request.GET.get('unit_type')
+    unit_type = None
+    if unit_type_id is not None:
+        try:
+            unit_type = UnitType.objects.get(pk=unit_type_id)
+        except UnitType.DoesNotExist:
+            pass
+    unit_type = UnitArticle.objects.filter(unit_type=unit_type).get(unit_type_id=unit_type_id)
+
+    units = UnitType.objects.all()
+
+    return render(request, 'unit_article.html', {'unit_type':unit_type, 'units':units })        
 
 
 
@@ -46,21 +78,12 @@ def unitconvert(request, converter_name=None):
         ).exclude(pk=converter.pk)
     else:
         converters = None
-    
-    
-       
     return  render(request, 'unit_convert_page.html', { 
-
+        
         'types': types,
         'converters': converters,
         'conversion': converter,
-        
-
-        })         
+    })   
+          
 
     
-def lengthview(request):
-    return render(request, 'measurements/length.html', )
-def weightview(request):
-    return render(request, 'measurements/weight.html', )    
-        
